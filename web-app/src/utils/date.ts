@@ -50,3 +50,13 @@ export const getDaysRemaining = (endDate: Date): number => {
   const diff = endDate.getTime() - now.getTime();
   return Math.ceil(diff / (1000 * 60 * 60 * 24));
 };
+
+// Parse date from input field (avoids timezone issues)
+// Input format: YYYY-MM-DD from date input
+// Returns Date object at local midnight
+export const parseDateInput = (dateString: string): Date => {
+  // Split the date string (YYYY-MM-DD)
+  const [year, month, day] = dateString.split('-').map(Number);
+  // Create date at local midnight (not UTC)
+  return new Date(year, month - 1, day);
+};

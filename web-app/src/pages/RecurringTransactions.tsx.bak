@@ -361,7 +361,7 @@ export const RecurringTransactions = () => {
                 label={t('recurring.end_date') || 'End Date (Optional)'}
                 type="date"
                 value={formData.endDate ? formatDateForInput(formData.endDate) : ''}
-                onChange={(e) => setFormData({ ...formData, endDate: e.target.value ? parseDateInput(e.target.value) : undefined })}
+                onChange={(e) => setFormData({ ...formData, endDate: e.target.value ? new Date(e.target.value) : undefined })}
                 InputLabelProps={{ shrink: true }}
                 fullWidth
               />

@@ -15,19 +15,10 @@ export const useBudgetProgress = () => {
     return budgets.map(budget => {
       // Filter transactions within budget period and matching categories
       const relevantTransactions = transactions.filter(t => {
-        // Create new Date objects to avoid mutation
         const transactionDate = new Date(t.date);
-        const budgetStart = new Date(budget.startDate);
-        const budgetEnd = new Date(budget.endDate);
-
-        // Normalize to date-only comparison (ignore time)
-        const txDateOnly = new Date(transactionDate.getFullYear(), transactionDate.getMonth(), transactionDate.getDate());
-        const startDateOnly = new Date(budgetStart.getFullYear(), budgetStart.getMonth(), budgetStart.getDate());
-        const endDateOnly = new Date(budgetEnd.getFullYear(), budgetEnd.getMonth(), budgetEnd.getDate());
-
         const inDateRange =
-          txDateOnly >= startDateOnly &&
-          txDateOnly <= endDateOnly;
+          transactionDate >= new Date(budget.startDate) &&
+          transactionDate <= new Date(budget.endDate);
 
         const inCategory = budget.categories.length === 0 ||
           budget.categories.includes(t.categoryId);
