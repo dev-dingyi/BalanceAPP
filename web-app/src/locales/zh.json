@@ -1,0 +1,111 @@
+{
+  "common": {
+    "app_name": "记账本",
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除",
+    "edit": "编辑",
+    "add": "添加",
+    "search": "搜索",
+    "loading": "加载中...",
+    "error": "错误",
+    "success": "成功",
+    "confirm": "确认"
+  },
+  "auth": {
+    "sign_in": "登录",
+    "sign_up": "注册",
+    "sign_out": "退出",
+    "email": "邮箱",
+    "password": "密码",
+    "forgot_password": "忘记密码？",
+    "create_account": "创建账户",
+    "already_have_account": "已有账户？",
+    "dont_have_account": "还没有账户？"
+  },
+  "onboarding": {
+    "welcome": "欢迎使用记账本",
+    "select_currency": "选择您的主要货币",
+    "select_language": "选择您的语言",
+    "get_started": "开始使用"
+  },
+  "dashboard": {
+    "title": "仪表盘",
+    "total_spent": "总支出",
+    "budget_progress": "预算进度",
+    "spending_by_category": "分类支出",
+    "recent_transactions": "最近交易",
+    "spending_trend": "支出趋势"
+  },
+  "transaction": {
+    "add_transaction": "添加交易",
+    "edit_transaction": "编辑交易",
+    "amount": "金额",
+    "currency": "货币",
+    "date": "日期",
+    "time": "时间",
+    "location": "地点",
+    "description": "描述",
+    "category": "类别",
+    "select_category": "选择类别",
+    "transaction_added": "交易添加成功",
+    "transaction_updated": "交易更新成功",
+    "transaction_deleted": "交易删除成功",
+    "smart_input_placeholder": "例如：星巴克咖啡 45 元"
+  },
+  "category": {
+    "categories": "类别",
+    "add_category": "添加类别",
+    "edit_category": "编辑类别",
+    "category_name": "类别名称",
+    "category_name_en": "类别名称（英文）",
+    "category_name_cn": "类别名称（中文）",
+    "icon": "图标",
+    "color": "颜色",
+    "category_added": "类别添加成功",
+    "category_updated": "类别更新成功",
+    "category_deleted": "类别删除成功"
+  },
+  "budget": {
+    "budgets": "预算",
+    "add_budget": "添加预算",
+    "edit_budget": "编辑预算",
+    "budget_name": "预算名称",
+    "budget_type": "预算类型",
+    "monthly": "每月",
+    "custom": "自定义日期范围",
+    "recurring": "循环周期",
+    "amount": "金额",
+    "start_date": "开始日期",
+    "end_date": "结束日期",
+    "select_categories": "选择类别",
+    "recurring_settings": "循环设置",
+    "day_of_month": "每月的第几天",
+    "cycle_length": "周期长度（天）",
+    "budget_added": "预算添加成功",
+    "budget_updated": "预算更新成功",
+    "budget_deleted": "预算删除成功"
+  },
+  "stealth": {
+    "stealth_mode": "隐身模式",
+    "stealth_mode_description": "隐私保护功能，仅修改显示数据，不改变数据库",
+    "enable_stealth": "启用隐身模式",
+    "scaling": "缩放",
+    "scaling_description": "按百分比减少显示金额",
+    "scaling_percentage": "缩放百分比",
+    "hidden_categories": "隐藏类别",
+    "hidden_categories_description": "隐藏特定的敏感类别",
+    "noise_injection": "噪声注入",
+    "noise_injection_description": "添加虚假交易以增强真实感",
+    "frequency": "频率（每天）",
+    "amount_range": "金额范围"
+  },
+  "settings": {
+    "settings": "设置",
+    "general": "通用",
+    "language": "语言",
+    "preferred_currency": "首选货币",
+    "privacy": "隐私",
+    "account": "账户"
+  }
+}

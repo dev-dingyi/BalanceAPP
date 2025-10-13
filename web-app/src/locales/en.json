@@ -1,0 +1,111 @@
+{
+  "common": {
+    "app_name": "Balance",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "search": "Search",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "confirm": "Confirm"
+  },
+  "auth": {
+    "sign_in": "Sign In",
+    "sign_up": "Sign Up",
+    "sign_out": "Sign Out",
+    "email": "Email",
+    "password": "Password",
+    "forgot_password": "Forgot Password?",
+    "create_account": "Create Account",
+    "already_have_account": "Already have an account?",
+    "dont_have_account": "Don't have an account?"
+  },
+  "onboarding": {
+    "welcome": "Welcome to Balance",
+    "select_currency": "Select Your Primary Currency",
+    "select_language": "Select Your Language",
+    "get_started": "Get Started"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "total_spent": "Total Spent",
+    "budget_progress": "Budget Progress",
+    "spending_by_category": "Spending by Category",
+    "recent_transactions": "Recent Transactions",
+    "spending_trend": "Spending Trend"
+  },
+  "transaction": {
+    "add_transaction": "Add Transaction",
+    "edit_transaction": "Edit Transaction",
+    "amount": "Amount",
+    "currency": "Currency",
+    "date": "Date",
+    "time": "Time",
+    "location": "Location",
+    "description": "Description",
+    "category": "Category",
+    "select_category": "Select Category",
+    "transaction_added": "Transaction added successfully",
+    "transaction_updated": "Transaction updated successfully",
+    "transaction_deleted": "Transaction deleted successfully",
+    "smart_input_placeholder": "E.g., Coffee 45 CNY at Starbucks"
+  },
+  "category": {
+    "categories": "Categories",
+    "add_category": "Add Category",
+    "edit_category": "Edit Category",
+    "category_name": "Category Name",
+    "category_name_en": "Category Name (English)",
+    "category_name_cn": "Category Name (Chinese)",
+    "icon": "Icon",
+    "color": "Color",
+    "category_added": "Category added successfully",
+    "category_updated": "Category updated successfully",
+    "category_deleted": "Category deleted successfully"
+  },
+  "budget": {
+    "budgets": "Budgets",
+    "add_budget": "Add Budget",
+    "edit_budget": "Edit Budget",
+    "budget_name": "Budget Name",
+    "budget_type": "Budget Type",
+    "monthly": "Monthly",
+    "custom": "Custom Date Range",
+    "recurring": "Recurring Cycle",
+    "amount": "Amount",
+    "start_date": "Start Date",
+    "end_date": "End Date",
+    "select_categories": "Select Categories",
+    "recurring_settings": "Recurring Settings",
+    "day_of_month": "Day of Month",
+    "cycle_length": "Cycle Length (Days)",
+    "budget_added": "Budget added successfully",
+    "budget_updated": "Budget updated successfully",
+    "budget_deleted": "Budget deleted successfully"
+  },
+  "stealth": {
+    "stealth_mode": "Stealth Mode",
+    "stealth_mode_description": "Privacy protection that modifies displayed data without changing the database",
+    "enable_stealth": "Enable Stealth Mode",
+    "scaling": "Scaling",
+    "scaling_description": "Reduce displayed amounts by a percentage",
+    "scaling_percentage": "Scaling Percentage",
+    "hidden_categories": "Hidden Categories",
+    "hidden_categories_description": "Hide specific sensitive categories",
+    "noise_injection": "Noise Injection",
+    "noise_injection_description": "Add fake transactions for authenticity",
+    "frequency": "Frequency (per day)",
+    "amount_range": "Amount Range"
+  },
+  "settings": {
+    "settings": "Settings",
+    "general": "General",
+    "language": "Language",
+    "preferred_currency": "Preferred Currency",
+    "privacy": "Privacy",
+    "account": "Account"
+  }
+}
