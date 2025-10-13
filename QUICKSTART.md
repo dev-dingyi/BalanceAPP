@@ -49,9 +49,9 @@ firebase deploy --only firestore:rules
 
 ### 8. Start Development
 ```bash
-cd web-app
-npm install
-npm run dev
+# From project root (BalanceAPP directory)
+npm run install:all  # First time only
+npm run dev          # Start dev server
 ```
 
 Open http://localhost:5173
@@ -59,6 +59,10 @@ Open http://localhost:5173
 ## Daily Development
 
 ```bash
+# From project root - easiest way!
+npm run dev
+
+# OR from web-app directory
 cd web-app
 npm run dev
 ```

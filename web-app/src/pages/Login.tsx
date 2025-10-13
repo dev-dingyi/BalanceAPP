@@ -26,12 +26,35 @@ export const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+
+    // Client-side validation
+    if (!email || !email.includes('@')) {
+      setError('Please enter a valid email address');
+      return;
+    }
+
+    if (!password || password.length < 6) {
+      setError('Password must be at least 6 characters');
+      return;
+    }
+
     setLoading(true);
 
     const { user, error } = await signIn(email, password);
 
     if (error) {
-      setError(error.message);
+      // Provide user-friendly error messages
+      const errorMessage = error.message.includes('user-not-found')
+        ? 'No account found with this email'
+        : error.message.includes('wrong-password')
+        ? 'Incorrect password'
+        : error.message.includes('invalid-credential')
+        ? 'Invalid email or password'
+        : error.message.includes('too-many-requests')
+        ? 'Too many attempts. Please try again later.'
+        : error.message;
+
+      setError(errorMessage);
       setLoading(false);
     } else if (user) {
       navigate('/dashboard');
@@ -39,15 +62,23 @@ export const Login = () => {
   };
 
   return (
-    <Container maxWidth="xs">
-      <Box
-        sx={{
-          marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
+    <Box
+      sx={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
+      }}
+    >
+      <Container maxWidth="xs">
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
         <Paper elevation={3} sx={{ p: 4, width: '100%' }}>
           <Typography component="h1" variant="h4" align="center" gutterBottom>
             {t('common.app_name')}
@@ -108,7 +139,8 @@ export const Login = () => {
             </Box>
           </Box>
         </Paper>
-      </Box>
-    </Container>
+        </Box>
+      </Container>
+    </Box>
   );
 };

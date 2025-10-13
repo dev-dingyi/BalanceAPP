@@ -1,0 +1,20 @@
+{
+  "name": "balance-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Personal finance tracker with AI-powered features",
+  "scripts": {
+    "dev": "cd web-app && npm run dev",
+    "build": "cd web-app && npm run build",
+    "preview": "cd web-app && npm run preview",
+    "lint": "cd web-app && npm run lint",
+    "install:all": "cd web-app && npm install",
+    "clean": "cd web-app && rm -rf node_modules dist && npm install",
+    "firebase:deploy": "npm run build && firebase deploy",
+    "firebase:rules": "firebase deploy --only firestore:rules",
+    "firebase:hosting": "npm run build && firebase deploy --only hosting"
+  },
+  "keywords": ["finance", "tracker", "react", "firebase", "ai"],
+  "author": "",
+  "license": "MIT"
+}

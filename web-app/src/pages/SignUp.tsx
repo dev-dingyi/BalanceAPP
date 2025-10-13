@@ -28,6 +28,12 @@ export const SignUp = () => {
     e.preventDefault();
     setError('');
 
+    // Client-side validation
+    if (!email || !email.includes('@')) {
+      setError('Please enter a valid email address');
+      return;
+    }
+
     if (password !== confirmPassword) {
       setError('Passwords do not match');
       return;
@@ -43,7 +49,16 @@ export const SignUp = () => {
     const { user, error } = await signUp(email, password);
 
     if (error) {
-      setError(error.message);
+      // Provide user-friendly error messages
+      const errorMessage = error.message.includes('email-already-in-use')
+        ? 'This email is already registered. Please sign in instead.'
+        : error.message.includes('invalid-email')
+        ? 'Please enter a valid email address'
+        : error.message.includes('weak-password')
+        ? 'Password is too weak. Please use a stronger password.'
+        : error.message;
+
+      setError(errorMessage);
       setLoading(false);
     } else if (user) {
       navigate('/onboarding');
@@ -51,15 +66,23 @@ export const SignUp = () => {
   };
 
   return (
-    <Container maxWidth="xs">
-      <Box
-        sx={{
-          marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
+    <Box
+      sx={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
+      }}
+    >
+      <Container maxWidth="xs">
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
         <Paper elevation={3} sx={{ p: 4, width: '100%' }}>
           <Typography component="h1" variant="h4" align="center" gutterBottom>
             {t('common.app_name')}
@@ -132,7 +155,8 @@ export const SignUp = () => {
             </Box>
           </Box>
         </Paper>
-      </Box>
-    </Container>
+        </Box>
+      </Container>
+    </Box>
   );
 };

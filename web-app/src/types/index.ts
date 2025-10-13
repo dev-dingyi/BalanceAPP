@@ -159,3 +159,38 @@ export interface SpendingTrend {
   amount: number;
   currency: Currency;
 }
+
+// Recurring transaction types
+export type RecurringFrequency = 'daily' | 'weekly' | 'biweekly' | 'monthly' | 'quarterly' | 'yearly';
+
+export interface RecurringTransaction {
+  id: string;
+  userId: string;
+  templateName: string;
+  amount: number;
+  currency: Currency;
+  description: string;
+  categoryId: string;
+  location?: string;
+  frequency: RecurringFrequency;
+  startDate: Date;
+  endDate?: Date; // Optional end date
+  lastCreated?: Date; // Last time a transaction was created
+  nextDue: Date; // Next scheduled creation date
+  isActive: boolean;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+}
+
+export interface RecurringTransactionInput {
+  templateName: string;
+  amount: number;
+  currency: Currency;
+  description: string;
+  categoryId: string;
+  location?: string;
+  frequency: RecurringFrequency;
+  startDate: Date;
+  endDate?: Date;
+  isActive: boolean;
+}

@@ -1,11 +1,28 @@
+import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
-import { Login } from './pages/Login';
-import { SignUp } from './pages/SignUp';
-import { Onboarding } from './pages/Onboarding';
-import { Dashboard } from './pages/Dashboard';
+import { ThemeProvider, createTheme, CssBaseline, Box, CircularProgress } from '@mui/material';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { Layout } from './components/Layout';
+
+// Lazy load pages for better performance
+const Login = lazy(() => import('./pages/Login').then(m => ({ default: m.Login })));
+const SignUp = lazy(() => import('./pages/SignUp').then(m => ({ default: m.SignUp })));
+const Onboarding = lazy(() => import('./pages/Onboarding').then(m => ({ default: m.Onboarding })));
+const Dashboard = lazy(() => import('./pages/Dashboard').then(m => ({ default: m.Dashboard })));
+const Transactions = lazy(() => import('./pages/Transactions').then(m => ({ default: m.Transactions })));
+const AddTransaction = lazy(() => import('./pages/AddTransaction').then(m => ({ default: m.AddTransaction })));
+const Categories = lazy(() => import('./pages/Categories').then(m => ({ default: m.Categories })));
+const Budgets = lazy(() => import('./pages/Budgets').then(m => ({ default: m.Budgets })));
+const Analytics = lazy(() => import('./pages/Analytics').then(m => ({ default: m.Analytics })));
+const RecurringTransactions = lazy(() => import('./pages/RecurringTransactions').then(m => ({ default: m.RecurringTransactions })));
+const Settings = lazy(() => import('./pages/Settings').then(m => ({ default: m.Settings })));
+
+// Loading component
+const PageLoader = () => (
+  <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+    <CircularProgress />
+  </Box>
+);
 
 const theme = createTheme({
   palette: {
@@ -23,10 +40,11 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <BrowserRouter>
-        <Routes>
-          {/* Public routes */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            {/* Public routes */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
 
           {/* Protected routes */}
           <Route
@@ -48,11 +66,31 @@ function App() {
             }
           />
           <Route
+            path="/transactions"
+            element={
+              <ProtectedRoute>
+                <Layout>
+                  <Transactions />
+                </Layout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/transactions/add"
+            element={
+              <ProtectedRoute>
+                <Layout>
+                  <AddTransaction />
+                </Layout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/categories"
             element={
               <ProtectedRoute>
                 <Layout>
-                  <div>Categories Page (Coming Soon)</div>
+                  <Categories />
                 </Layout>
               </ProtectedRoute>
             }
@@ -62,7 +100,27 @@ function App() {
             element={
               <ProtectedRoute>
                 <Layout>
-                  <div>Budgets Page (Coming Soon)</div>
+                  <Budgets />
+                </Layout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/analytics"
+            element={
+              <ProtectedRoute>
+                <Layout>
+                  <Analytics />
+                </Layout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/recurring"
+            element={
+              <ProtectedRoute>
+                <Layout>
+                  <RecurringTransactions />
                 </Layout>
               </ProtectedRoute>
             }
@@ -72,16 +130,17 @@ function App() {
             element={
               <ProtectedRoute>
                 <Layout>
-                  <div>Settings Page (Coming Soon)</div>
+                  <Settings />
                 </Layout>
               </ProtectedRoute>
             }
           />
 
-          {/* Default redirect */}
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
-          <Route path="*" element={<Navigate to="/dashboard" replace />} />
-        </Routes>
+            {/* Default redirect */}
+            <Route path="/" element={<Navigate to="/dashboard" replace />} />
+            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          </Routes>
+        </Suspense>
       </BrowserRouter>
     </ThemeProvider>
   );

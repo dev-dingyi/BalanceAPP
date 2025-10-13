@@ -27,6 +27,9 @@ import {
   AccountBalance as BudgetIcon,
   Settings as SettingsIcon,
   Visibility as StealthIcon,
+  Receipt as TransactionIcon,
+  BarChart as AnalyticsIcon,
+  Repeat as RecurringIcon,
 } from '@mui/icons-material';
 import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
@@ -42,7 +45,7 @@ export const Layout = ({ children }: LayoutProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { user, signOut } = useAuth();
-  const { stealthMode, setStealthMode } = useSettingsStore();
+  const { stealthMode, toggleStealthMode } = useSettingsStore();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -63,8 +66,11 @@ export const Layout = ({ children }: LayoutProps) => {
 
   const menuItems = [
     { text: t('dashboard.title'), icon: <DashboardIcon />, path: '/dashboard' },
+    { text: t('transaction.transactions'), icon: <TransactionIcon />, path: '/transactions' },
     { text: t('category.categories'), icon: <CategoryIcon />, path: '/categories' },
     { text: t('budget.budgets'), icon: <BudgetIcon />, path: '/budgets' },
+    { text: t('analytics.title') || 'Analytics', icon: <AnalyticsIcon />, path: '/analytics' },
+    { text: t('recurring.title') || 'Recurring', icon: <RecurringIcon />, path: '/recurring' },
     { text: t('settings.settings'), icon: <SettingsIcon />, path: '/settings' },
   ];
 
@@ -132,8 +138,8 @@ export const Layout = ({ children }: LayoutProps) => {
 
           {/* Stealth Mode Toggle */}
           <IconButton
-            color={stealthMode ? 'secondary' : 'inherit'}
-            onClick={() => setStealthMode(!stealthMode)}
+            color={stealthMode.enabled ? 'secondary' : 'inherit'}
+            onClick={toggleStealthMode}
             title={t('stealth.stealth_mode')}
           >
             <StealthIcon />
@@ -181,9 +187,9 @@ export const Layout = ({ children }: LayoutProps) => {
         {drawer}
       </Drawer>
 
-      <Container component="main" sx={{ flexGrow: 1, py: 3 }}>
+      <Box component="main" sx={{ flexGrow: 1, width: '100%' }}>
         {children}
-      </Container>
+      </Box>
 
       <Box
         component="footer"
