@@ -6,6 +6,8 @@ export interface ParsedTransaction {
   currency: Currency | null;
   description: string;
   location: string | null;
+  date: string | null; // YYYY-MM-DD format
+  time: string | null; // HH:MM format
   suggestedCategory: string | null;
   confidence: number;
 }
@@ -41,6 +43,8 @@ export const parseTransactionText = (text: string, userCategories: Array<{ id: s
     currency: null,
     description: '',
     location: null,
+    date: null,
+    time: null,
     suggestedCategory: null,
     confidence: 0,
   };

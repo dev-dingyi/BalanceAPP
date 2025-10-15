@@ -7,6 +7,8 @@ export interface ParsedTransaction {
   description: string;
   location: string | null;
   suggestedCategory: string | null;
+  date: string | null; // YYYY-MM-DD format
+  time: string | null; // HH:MM format
   confidence: number;
 }
 
@@ -39,9 +41,16 @@ export const parseWithAI = async (
       .map((cat, idx) => `${idx + 1}. ${cat.name} (id: ${cat.id})`)
       .join('\n');
 
+    // Get today's date for context
+    const today = new Date();
+    const todayStr = today.toISOString().split('T')[0]; // YYYY-MM-DD
+    const currentTime = today.toTimeString().slice(0, 5); // HH:MM
+
     const prompt = `You are a transaction parsing assistant. Parse the following transaction text and extract structured data.
 
 Transaction text: "${text}"
+Current date: ${todayStr}
+Current time: ${currentTime}
 
 Available categories:
 ${categoriesList}
@@ -50,8 +59,10 @@ Parse the text and respond with ONLY a valid JSON object (no markdown, no explan
 {
   "amount": <number or null>,
   "currency": "USD" or "CNY" or null,
-  "description": "<main description without amount/currency/location>",
+  "description": "<main description without amount/currency/location/time>",
   "location": "<location if mentioned, otherwise null>",
+  "date": "<YYYY-MM-DD format if date mentioned, otherwise null>",
+  "time": "<HH:MM format if time mentioned, otherwise null>",
   "suggestedCategoryId": "<category id from list above that best matches, or null>",
   "confidence": <number between 0 and 1>
 }
@@ -61,19 +72,26 @@ Rules:
 - Detect currency from symbols ($, ¥), codes (USD, CNY), or words (dollars, yuan, 元, RMB)
 - Default to CNY if currency is ambiguous or Chinese text is present
 - Extract location from patterns like "at X", "@ X", "in X"
-- Clean description by removing amount, currency, and location markers
+- Extract date from patterns like "yesterday", "today", "tomorrow", "on Monday", "Oct 15", "10/15"
+- Extract time from patterns like "at 3pm", "14:30", "3:30 PM", "noon", "morning", "evening"
+- If date/time mentioned, parse and return in specified formats
+- If no date/time mentioned, return null (will default to current)
+- Clean description by removing amount, currency, location, date, and time markers
 - Match to the best category based on keywords and context
 - Set confidence based on how clear the parsing was (0.9 = very clear, 0.5 = ambiguous)
 
 Examples:
-Input: "Coffee 45 CNY at Starbucks"
-Output: {"amount": 45, "currency": "CNY", "description": "Coffee", "location": "Starbucks", "suggestedCategoryId": "<food-category-id>", "confidence": 0.95}
+Input: "Coffee 45 CNY at Starbucks at 9am"
+Output: {"amount": 45, "currency": "CNY", "description": "Coffee", "location": "Starbucks", "date": null, "time": "09:00", "suggestedCategoryId": "<food-category-id>", "confidence": 0.95}
 
-Input: "Uber ride $25"
-Output: {"amount": 25, "currency": "USD", "description": "Uber ride", "location": null, "suggestedCategoryId": "<transport-category-id>", "confidence": 0.9}
+Input: "Uber ride $25 yesterday at 6pm"
+Output: {"amount": 25, "currency": "USD", "description": "Uber ride", "location": null, "date": "<yesterday's date>", "time": "18:00", "suggestedCategoryId": "<transport-category-id>", "confidence": 0.9}
 
-Input: "星巴克咖啡 45 元"
-Output: {"amount": 45, "currency": "CNY", "description": "星巴克咖啡", "location": null, "suggestedCategoryId": "<food-category-id>", "confidence": 0.95}
+Input: "星巴克咖啡 45 元 下午3点"
+Output: {"amount": 45, "currency": "CNY", "description": "星巴克咖啡", "location": null, "date": null, "time": "15:00", "suggestedCategoryId": "<food-category-id>", "confidence": 0.95}
+
+Input: "Lunch 80 yuan at 12:30"
+Output: {"amount": 80, "currency": "CNY", "description": "Lunch", "location": null, "date": null, "time": "12:30", "suggestedCategoryId": "<food-category-id>", "confidence": 0.9}
 
 Now parse the transaction text provided above.`;
 
@@ -103,6 +121,8 @@ Now parse the transaction text provided above.`;
       currency: parsed.currency,
       description: parsed.description || text,
       location: parsed.location,
+      date: parsed.date,
+      time: parsed.time,
       suggestedCategory: parsed.suggestedCategoryId,
       confidence: parsed.confidence || 0.5,
     };

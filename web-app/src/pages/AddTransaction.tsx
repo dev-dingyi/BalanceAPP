@@ -88,6 +88,14 @@ export const AddTransaction = () => {
       newFormData.location = parsed.location;
     }
 
+    if (parsed.date) {
+      newFormData.date = parsed.date;
+    }
+
+    if (parsed.time) {
+      newFormData.time = parsed.time;
+    }
+
     if (parsed.suggestedCategory) {
       newFormData.categoryId = parsed.suggestedCategory;
     }
